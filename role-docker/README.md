@@ -1,7 +1,7 @@
 Role Name
 =========
 
-A brief description of the role goes here.
+Ansible role for app-emulation/docker on [Gentoo Linux] (http://www.gentoo.org)
 
 Requirements
 ------------
