@@ -1,7 +1,7 @@
 Ansible Role: app-emulation/docker
 =========
 
-Ansible role for app-emulation/docker on [Gentoo Linux] (http://www.gentoo.org)
+Ansible role for [app-emulation/docker] (https://packages.gentoo.org/packages/app-emulation/docker) on [Gentoo Linux] (http://www.gentoo.org)
 
 Requirements
 ------------
