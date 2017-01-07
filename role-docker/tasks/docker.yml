@@ -1,0 +1,15 @@
+- name: Add libseccomp USE flags
+  become: true
+  lineinfile: dest=/etc/portage/package.use
+    regexp="^>=sys-libs/libseccomp-2.3.0"
+    insertafter=EOF
+    line='>=sys-libs/libseccomp-2.3.0 static-libs'
+    state=present
+
+- name: Install app-emulation/docker
+  portage:
+    package: app-emulation/docker
+    state: present
+  tags: packages
+  become: true
+  notify: start docker

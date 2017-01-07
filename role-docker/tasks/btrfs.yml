@@ -1,0 +1,28 @@
+- name: Install sys-fs/btrfs-progs
+  become: true
+  portage:
+    package: sys-fs/btrfs-progs
+    state: present
+  tags: packages
+
+- name: Add docker btrfs USE flags
+  become: true
+  lineinfile: dest=/etc/portage/package.use
+    regexp="app-emulation/docker"
+    insertafter=EOF
+    line='app-emulation/docker {{ docker_storage_type }} -device-mapper'
+    state=present
+
+- name: Create docker storage with btrfs
+  become: true
+  filesystem:
+   fstype: "{{ docker_storage_type }}"
+   dev: "{{ docker_storage_device }}"
+
+- name: Mount docker storage filesystems
+  become: true
+  mount:
+   name: /var/lib/docker
+   src: "{{ docker_storage_device }}"
+   fstype: "{{ docker_storage_type }}"
+   state: mounted

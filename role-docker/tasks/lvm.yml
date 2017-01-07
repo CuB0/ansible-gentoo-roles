@@ -1,0 +1,74 @@
+- name: Install sys-fs/lvm2
+  become: true
+  portage:
+    package: sys-fs/lvm2
+    state: present
+  tags: packages
+
+- name: Enable LVM
+  become: true
+  service: name=lvm state=started enabled=yes runlevel=default
+
+- name: Enable LVM eatd
+  become: true
+  service: name=lvmetad state=started enabled=yes runlevel=default
+
+- name: Enable LVM monitoring
+  become: true
+  service: name=lvm-monitoring state=started enabled=yes runlevel=default
+
+- name: Add docker {{ docker_storage_type }} USE flags
+  become: true
+  lineinfile: dest=/etc/portage/package.use
+    regexp="app-emulation/docker"
+    insertafter=EOF
+    line='app-emulation/docker {{ docker_storage_type }} -btrfs'
+    state=present
+
+- name: Create docker storage volume group
+  become: true
+  lvg:
+   pvs: "{{ docker_storage_device }}"
+   vg: vg-docker
+
+- name: Create docker storage metadata logical volume
+  become: true
+  lvol: 
+   vg: vg-docker
+   lv: docker-metadata
+   size: 1%VG
+   shrink: false
+   opts: -W y 
+   active: no
+
+- name: Create docker storage data logical volume
+  become: true
+  lvol:
+   vg: vg-docker
+   lv: docker-data
+   size: 95%VG
+   shrink: false
+   opts: -W y
+   active: no 
+
+- name: Convert lvm to thinpool
+  become: true
+  command: lvconvert -y --zero n -c 512K --thinpool vg-docker/docker-data --poolmetadata vg-docker/docker-metadata
+
+- name: Create docker storage profile
+  become: true
+  copy:
+    src: role-docker/tasks/files/vg-docker-thinpool.profile
+    dest: /etc/lvm/profile/vg-docker-thinpool.profile
+    owner: root
+    group: root
+    mode: 0444
+
+# - name: Enable docker storage on LVM
+#   become: true
+#   lineinfile:
+#    dest: /etc/conf.d/docker
+#    state: present
+#    regexp: '^DOCKER_OPTS'
+#    insertafter: '="'
+#    line: '--storage-driver=devicemapper --storage-opt=dm.thinpooldev=vg--docker-docker--data --storage-opt=dm.use_deferred_removal=true --storage-opt=dm.use_deferred_deletion=true' 

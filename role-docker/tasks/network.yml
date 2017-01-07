@@ -1,0 +1,32 @@
+- name: Install net-misc/bridge-utils
+  portage: package=net-misc/bridge-utils
+  tags: packages
+  become: true
+
+- name: Check if docker0 bridge exists
+  stat:
+    path: /sys/class/net/docker0
+  register: bridge
+
+- name: Configure docker networking
+  become: true
+  template: >
+    src=docker.j2
+    dest=/etc/conf.d/docker
+    owner=root group=root mode=0644
+  notify:
+    restart docker
+  tags: config
+
+- name: Ronfigure docker networking
+  become: true
+  when: bridge.stat.isdir is defined and bridge.stat.isdir
+  template: >
+    src=docker.j2
+    dest=/etc/conf.d/docker
+    owner=root group=root mode=0644
+  notify:
+   - stop docker
+   - reconfigure docker0 bridge
+   - start docker
+  tags: config

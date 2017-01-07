@@ -1,0 +1,5 @@
+---
+# defaults file for role-docker
+docker_storage_device: ""
+docker_storage_type: ""
+docker_bridge_ip: ""

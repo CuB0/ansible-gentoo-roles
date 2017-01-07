@@ -1,0 +1,15 @@
+# {{ ansible_managed  }}
+# /etc/conf.d/docker: config file for /etc/init.d/docker
+
+# where the docker daemon output gets piped
+#DOCKER_LOGFILE="/var/log/docker.log"
+
+# where docker's pid get stored
+#DOCKER_PIDFILE="/run/docker.pid"
+
+# where the docker daemon itself is run from
+#DOCKER_BINARY="/usr/bin/docker"
+
+# any other random options you want to pass to docker
+DOCKER_OPTS="{% if docker_bridge_ip is defined %}--bip={{ docker_bridge_ip }}{% endif %}
+{% if docker_storage_type == 'lvm'%} --storage-driver=devicemapper --storage-opt=dm.thinpooldev=vg--docker-docker--data --storage-opt=dm.use_deferred_removal=true --storage-opt=dm.use_deferred_deletion=true{% elif docker_storage_type == 'btrfs' %} --storage-driver=btrfs{% elif docker_storage_type == 'overlay' %} --storage-driver=overlay{% endif %}"

@@ -1,0 +1,41 @@
+---
+# handlers file for role-docker
+
+- name: start docker
+  become: true
+  service:
+    name: docker
+    enabled: true
+    state: started
+
+- name: stop docker
+  become: true
+  service:
+    name: docker
+    state: stopped
+
+- name: restart docker
+  become: true
+  service:
+    name: docker
+    state: restarted
+
+- name: enable lvm-etad
+  become: true
+  service: 
+    name: lvm-monitoring
+    enabled: true
+    runlevel: default    
+
+- name: start lvm-monitoring
+  become: true
+  service:
+    name: lvm-monitoring
+    state: started
+
+- name: reconfigure docker0 bridge
+  become: true
+  command: "{{ item }}"
+  with_items: 
+   - ip link set down docker0 
+   - brctl delbr docker0

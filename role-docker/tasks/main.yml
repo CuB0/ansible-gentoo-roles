@@ -1,0 +1,12 @@
+---
+# tasks file for role-docker
+- include: role-docker/tasks/btrfs.yml
+  when: docker_storage_type == "btrfs"
+
+- include: role-docker/tasks/lvm.yml
+  when: docker_storage_type == "lvm"
+
+- include: role-docker/tasks/network.yml
+  when: docker_bridge_ip is defined
+
+- include: role-docker/tasks/docker.yml
