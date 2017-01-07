@@ -1,4 +1,4 @@
-Role Name
+Ansible Role: app-emulation/docker
 =========
 
 Ansible role for app-emulation/docker on [Gentoo Linux] (http://www.gentoo.org)
