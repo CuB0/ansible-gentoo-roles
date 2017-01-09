@@ -12,7 +12,9 @@ Role Variables
 --------------
 
 docker_storage_device: Describe the block device where docker storage will be prepared. Eg. /dev/sdb
+
 docker_storage_type: Describe the type of docker storage. Valid options are: btrfs or lvm. If you don't define this variable you will end with localfile backed storage
+
 docker_bridge_ip: Describe the IPv4 address of docker0 bridge. Eg. 192.168.1.1/24
 
 Dependencies
