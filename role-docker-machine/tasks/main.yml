@@ -1,0 +1,16 @@
+---
+# tasks file for role-docker-machine
+- name: Unmask app-emulation/docker-machine
+  become: true
+  lineinfile: dest=/etc/portage/package.keywords
+    regexp="^=app-emulation/docker-machine-0.8.2 ~amd64"
+    insertafter=EOF
+    line='=app-emulation/docker-machine-0.8.2 ~amd64'
+    state=present
+
+- name: Install app-emulation/docker-machine
+  become: true
+  portage:
+    package: app-emulation/docker-machine
+    state: present
+  tags: install
