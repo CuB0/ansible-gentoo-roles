@@ -6,7 +6,7 @@ Ansible role for [app-emulation/docker] (https://packages.gentoo.org/packages/ap
 Requirements
 ------------
 
-All requirements are satisfied ba role itself
+All requirements are satisfied by role itself
 
 Role Variables
 --------------
@@ -20,7 +20,7 @@ docker_bridge_ip: Describe the IPv4 address of docker0 bridge. Eg. 192.168.1.1/2
 Dependencies
 ------------
 
-Thi role doesn't depend on any other role.
+This role doesn't depend on any other role.
 
 Example Playbook
 ----------------
