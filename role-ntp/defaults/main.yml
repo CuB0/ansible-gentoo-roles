@@ -1,0 +1,15 @@
+---
+# List of the servers (domain names or IP addresses) ntpd should sync with.
+ntpd_servers:
+  - 0.gentoo.pool.ntp.org
+  - 1.gentoo.pool.ntp.org
+  - 2.gentoo.pool.ntp.org
+  - 3.gentoo.pool.ntp.org
+
+# Define the path of the server dift file
+ntpd_driftfile_path:
+  - /var/lib/ntp/ntp.drift
+
+# Define restriction access to server. Syntax must be HOST/NETWORK mask SUBNETMASK!
+#ntpd_restrict:
+#  -
