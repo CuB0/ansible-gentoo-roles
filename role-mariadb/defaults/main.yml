@@ -1,0 +1,17 @@
+---
+# defaults file for role-mariadb
+# Set default SQL engine for MariaDB
+mariadb_storage_engine:
+        - innodb
+
+# Set default collation for MariaDB server
+mariadb_collation_server:
+        - utf8_general_ci
+
+# Set default for a nwe MariaDB connection
+mariadb_init_connect:
+        - 'SET NAMES utf8'
+
+# Deault root password
+mariadb_password:
+        - "pippo"

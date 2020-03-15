@@ -1,0 +1,21 @@
+sudo: required
+dist: gentoo
+language: python
+python:
+  - "2.7"
+services:
+  - docker
+env:
+  global:
+    - PATH="/usr/bin:$PATH"
+
+before_install:
+  - sudo emerge app-emultion/docker
+
+install:
+  - sudo emerge docker-py
+  - ansible --version
+
+script:
+  - ansible-playbook -i test/inventory test/main.yml --syntax-check
+  - cd test && make

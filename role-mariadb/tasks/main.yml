@@ -1,0 +1,19 @@
+---
+- name: install dev-db/mariadb
+  portage: package=dev-db/mariadb
+  tags: [install, packages]
+
+- name: configure mariadb
+  template: >
+    src=my.cnf.j2
+    dest=/etc/mysql/my.cnf
+    owner=root group=root mode=0644
+  notify: restart mariadb
+  tags: config
+
+- name: secure installation
+  shell: yes {{ mariadb_password  }} | emerge --config dev-db/mariadb
+
+- name: enable and start mariadb
+  service: name=mysql enabled=yes state=started
+  tags: services
