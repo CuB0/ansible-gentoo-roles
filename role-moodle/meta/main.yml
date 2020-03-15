@@ -1,0 +1,13 @@
+---
+galaxy_info:
+  author: Davide Rebeccani
+  description: Install and configure www-apps/moodle
+  company: Università degli Studi di Padova 
+  license: license (GPLv2)
+  min_ansible_version: 1.8
+  platforms:
+    - name: Gentoo
+  categories:
+    - system
+
+dependencies: []

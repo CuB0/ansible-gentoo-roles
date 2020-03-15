@@ -8,3 +8,10 @@ My personal ansible [Ansible](http://www.ansible.com) roles for [Gentoo Linux](h
 
 [docker-machine] (https://github.com/CuB0/ansible-gentoo-roles/tree/master/role-docker-machine)
 
+[mariadb]
+
+[moodle]
+
+[ntp]
+
+[openssh]

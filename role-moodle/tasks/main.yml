@@ -1,0 +1,6 @@
+---
+- name: install www-apps/moodle
+  portage: package=www-apps/moodle
+  tags: [install,packages]
+
+- name: configure moodle
